@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.2" last-position="38,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<role name="avoinhallinto_user"
+      password="avoinhallinto_user">
+</role>
+
+<role name="avoinhallinto_dev"
+      createdb="true"
+      replication="true"
+      createrole="true"
+      login="true"
+      password="SalasanaJaEntteri">
+</role>
+
+<database name="new_database">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="avoinhallinto" rect-visible="true" fill-color="#e1e1e1">
+	<role name="avoinhallinto_dev"/>
+</schema>
+
+<table name="person">
+	<schema name="avoinhallinto"/>
+	<position x="660" y="580"/>
+	<column name="person_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="person_name" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="person_email" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="person_password" not-null="true">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="phone">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="person_id" type="pk-constr" table="avoinhallinto.person">
+		<columns names="person_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="person_has_role_in_group">
+	<schema name="avoinhallinto"/>
+	<position x="1480" y="580"/>
+	<column name="role_type" not-null="true">
+		<type name="integer" length="128"/>
+	</column>
+	<column name="person_id">
+		<type name="integer"/>
+	</column>
+	<column name="group_id">
+		<type name="integer"/>
+	</column>
+</table>
+
+<table name="organization_group">
+	<schema name="avoinhallinto"/>
+	<position x="1480" y="206"/>
+	<column name="group_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="group_name">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="orgranization_id">
+		<type name="integer"/>
+	</column>
+	<constraint name="group_id" type="pk-constr" table="avoinhallinto.organization_group">
+		<columns names="group_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="organization">
+	<schema name="avoinhallinto"/>
+	<position x="1400" y="29"/>
+	<column name="organization_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="organization_name">
+		<type name="varchar" length="128"/>
+	</column>
+	<column name="address">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="organization_id" type="pk-constr" table="avoinhallinto.organization">
+		<columns names="organization_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="group_role">
+	<schema name="avoinhallinto"/>
+	<position x="1420" y="360"/>
+	<column name="role_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="role_name">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="role_id" type="pk-constr" table="avoinhallinto.group_role">
+		<columns names="role_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="meeting">
+	<schema name="avoinhallinto"/>
+	<position x="620" y="203"/>
+	<column name="meeting_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="start_time">
+		<type name="time"/>
+	</column>
+	<column name="endtime">
+		<type name="time"/>
+	</column>
+	<column name="group_id">
+		<type name="smallint"/>
+	</column>
+	<column name="visiblity">
+		<type name="smallint"/>
+	</column>
+	<constraint name="meeting_id" type="pk-constr" table="avoinhallinto.meeting">
+		<columns names="meeting_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="meeting_has_persons">
+	<schema name="avoinhallinto"/>
+	<position x="260" y="426"/>
+	<column name="person_id">
+		<type name="integer"/>
+	</column>
+	<column name="meeting_id">
+		<type name="smallint"/>
+	</column>
+	<column name="role_in_meeting">
+		<type name="smallint"/>
+	</column>
+</table>
+
+<table name="case">
+	<schema name="avoinhallinto"/>
+	<position x="220" y="23"/>
+	<column name="case_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="description">
+		<type name="varchar" length="1024"/>
+	</column>
+	<column name="status">
+		<type name="smallint"/>
+	</column>
+	<column name="visibility">
+		<type name="smallint"/>
+	</column>
+	<constraint name="case_id" type="pk-constr" table="avoinhallinto.&quot;case&quot;">
+		<columns names="case_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="meeting_has_case">
+	<schema name="avoinhallinto"/>
+	<position x="220" y="180"/>
+	<column name="case_id">
+		<type name="integer"/>
+	</column>
+	<column name="meeting_id">
+		<type name="integer"/>
+	</column>
+</table>
+
+<table name="case_status">
+	<schema name="avoinhallinto"/>
+	<position x="720" y="103"/>
+	<column name="status_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="status_name">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="status_id" type="pk-constr" table="avoinhallinto.case_status">
+		<columns names="status_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="case_queue">
+	<schema name="avoinhallinto"/>
+	<position x="1020" y="26"/>
+	<column name="queue_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="case_id">
+		<type name="smallint"/>
+	</column>
+	<column name="group_id">
+		<type name="smallint"/>
+	</column>
+	<column name="status_id">
+		<type name="smallint"/>
+	</column>
+	<constraint name="queue_id" type="pk-constr" table="avoinhallinto.case_queue">
+		<columns names="queue_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="meeting_has_invitees">
+	<schema name="avoinhallinto"/>
+	<position x="820" y="420"/>
+	<column name="meeting_id">
+		<type name="smallint"/>
+	</column>
+	<column name="person_id">
+		<type name="smallint"/>
+	</column>
+</table>
+
+<table name="meeting_roles">
+	<schema name="avoinhallinto"/>
+	<position x="160" y="640"/>
+	<column name="meeting_role_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="description">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="meeting_role_id" type="pk-constr" table="avoinhallinto.meeting_roles">
+		<columns names="meeting_role_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="person_has_role_in_organization">
+	<schema name="avoinhallinto"/>
+	<position x="1080" y="340"/>
+	<column name="persion_id">
+		<type name="smallint"/>
+	</column>
+	<column name="organization_id">
+		<type name="smallint"/>
+	</column>
+	<column name="organization_role_id">
+		<type name="smallint"/>
+	</column>
+</table>
+
+<table name="organization_role">
+	<schema name="avoinhallinto"/>
+	<position x="1160" y="460"/>
+	<column name="role_id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="description">
+		<type name="varchar" length="128"/>
+	</column>
+	<constraint name="ogranization_role_id" type="pk-constr" table="avoinhallinto.organization_role">
+		<columns names="role_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="person_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="avoinhallinto.person" table="avoinhallinto.person_has_role_in_group">
+	<columns names="person_id" ref-type="src-columns"/>
+	<columns names="person_id" ref-type="dst-columns"/>
+		<comment><![CDATA[Identifies the person]]></comment>
+</constraint>
+
+<constraint name="group_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="avoinhallinto.organization_group" table="avoinhallinto.person_has_role_in_group">
+	<columns names="group_id" ref-type="src-columns"/>
+	<columns names="group_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="role_type" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.group_role" table="avoinhallinto.person_has_role_in_group">
+	<columns names="role_type" ref-type="src-columns"/>
+	<columns names="role_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="organization_id" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="avoinhallinto.organization" table="avoinhallinto.organization_group">
+	<columns names="orgranization_id" ref-type="src-columns"/>
+	<columns names="organization_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="belongs_to_group" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.organization_group" table="avoinhallinto.meeting">
+	<columns names="group_id" ref-type="src-columns"/>
+	<columns names="group_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="person_in_meeting" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.person" table="avoinhallinto.meeting_has_persons">
+	<columns names="person_id" ref-type="src-columns"/>
+	<columns names="person_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="meeting" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.meeting" table="avoinhallinto.meeting_has_persons">
+	<columns names="meeting_id" ref-type="src-columns"/>
+	<columns names="meeting_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="role_in_meeting" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.meeting_roles" table="avoinhallinto.meeting_has_persons">
+	<columns names="role_in_meeting" ref-type="src-columns"/>
+	<columns names="meeting_role_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="status" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.case_status" table="avoinhallinto.&quot;case&quot;">
+	<columns names="status" ref-type="src-columns"/>
+	<columns names="status_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="case" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.&quot;case&quot;" table="avoinhallinto.meeting_has_case">
+	<columns names="case_id" ref-type="src-columns"/>
+	<columns names="case_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="meeting" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.meeting" table="avoinhallinto.meeting_has_case">
+	<columns names="meeting_id" ref-type="src-columns"/>
+	<columns names="meeting_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="case_in_queue" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.&quot;case&quot;" table="avoinhallinto.case_queue">
+	<columns names="case_id" ref-type="src-columns"/>
+	<columns names="case_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="group_owns" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.organization_group" table="avoinhallinto.case_queue">
+	<columns names="group_id" ref-type="src-columns"/>
+	<columns names="group_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="status_in_group" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.case_status" table="avoinhallinto.case_queue">
+	<columns names="status_id" ref-type="src-columns"/>
+	<columns names="status_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="meeting" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.meeting" table="avoinhallinto.meeting_has_invitees">
+	<columns names="meeting_id" ref-type="src-columns"/>
+	<columns names="meeting_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="is_invited" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.person" table="avoinhallinto.meeting_has_invitees">
+	<columns names="person_id" ref-type="src-columns"/>
+	<columns names="person_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="person_has_role" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.person" table="avoinhallinto.person_has_role_in_organization">
+	<columns names="persion_id" ref-type="src-columns"/>
+	<columns names="person_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="belongs_to_ogranization" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.organization" table="avoinhallinto.person_has_role_in_organization">
+	<columns names="organization_id" ref-type="src-columns"/>
+	<columns names="organization_id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="has_role" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="avoinhallinto.organization_role" table="avoinhallinto.person_has_role_in_organization">
+	<columns names="organization_role_id" ref-type="src-columns"/>
+	<columns names="role_id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_person_has_role_person" type="relfk"
+	 src-table="avoinhallinto.person_has_role_in_group"
+	 dst-table="avoinhallinto.person"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_person_has_role_organization_group" type="relfk"
+	 src-table="avoinhallinto.person_has_role_in_group"
+	 dst-table="avoinhallinto.organization_group"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_organization_group_organization" type="relfk"
+	 src-table="avoinhallinto.organization_group"
+	 dst-table="avoinhallinto.organization"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_person_has_role_role" type="relfk"
+	 src-table="avoinhallinto.person_has_role_in_group"
+	 dst-table="avoinhallinto.group_role"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_case_case" type="relfk"
+	 src-table="avoinhallinto.meeting_has_case"
+	 dst-table="avoinhallinto.&quot;case&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_case_meeting" type="relfk"
+	 src-table="avoinhallinto.meeting_has_case"
+	 dst-table="avoinhallinto.meeting"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_persons_person" type="relfk"
+	 src-table="avoinhallinto.meeting_has_persons"
+	 dst-table="avoinhallinto.person"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_persons_meeting" type="relfk"
+	 src-table="avoinhallinto.meeting_has_persons"
+	 dst-table="avoinhallinto.meeting"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_organization_group" type="relfk"
+	 src-table="avoinhallinto.meeting"
+	 dst-table="avoinhallinto.organization_group"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_case_case_status" type="relfk"
+	 src-table="avoinhallinto.&quot;case&quot;"
+	 dst-table="avoinhallinto.case_status"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_case_queue_case" type="relfk"
+	 src-table="avoinhallinto.case_queue"
+	 dst-table="avoinhallinto.&quot;case&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_case_queue_organization_group" type="relfk"
+	 src-table="avoinhallinto.case_queue"
+	 dst-table="avoinhallinto.organization_group"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_case_queue_case_status" type="relfk"
+	 src-table="avoinhallinto.case_queue"
+	 dst-table="avoinhallinto.case_status"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_invitees_meeting" type="relfk"
+	 src-table="avoinhallinto.meeting_has_invitees"
+	 dst-table="avoinhallinto.meeting"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_invitees_person" type="relfk"
+	 src-table="avoinhallinto.meeting_has_invitees"
+	 dst-table="avoinhallinto.person"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_meeting_has_persons_meeting_roles" type="relfk"
+	 src-table="avoinhallinto.meeting_has_persons"
+	 dst-table="avoinhallinto.meeting_roles"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_person_has_role_in_organization_person" type="relfk"
+	 src-table="avoinhallinto.person_has_role_in_organization"
+	 dst-table="avoinhallinto.person"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_person_has_role_in_organization_organization" type="relfk"
+	 src-table="avoinhallinto.person_has_role_in_organization"
+	 dst-table="avoinhallinto.organization"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_person_has_role_in_organization_organization_role" type="relfk"
+	 src-table="avoinhallinto.person_has_role_in_organization"
+	 dst-table="avoinhallinto.organization_role"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
